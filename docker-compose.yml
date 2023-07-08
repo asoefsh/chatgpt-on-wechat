@@ -3,19 +3,12 @@ services:
   chatgpt-on-wechat:
     image: zhayujie/chatgpt-on-wechat
     container_name: chatgpt-on-wechat
+    security_opt:
+      - seccomp:unconfined
     environment:
-      allinai_api_key: '646e47c63061a2f8748c79bb-kxmdtm5d1b0ahqqz1oszl'
-      allinai_model_id: '646f196813f0603ff8ffb29a'
-      base_url: 'https://all.chayinzi.biz/api/openapi'
-      max_single_chat_replies: 100
-      max_group_chat_replies: 100
-      ad_message: ''
-      max_daily_replies: 500
-      max_hourly_replies: 100
-      max_message_length: 2000
-      #OPEN_AI_API_KEY: ''
+      OPEN_AI_API_KEY: 'YOUR API KEY'
       MODEL: 'gpt-3.5-turbo'
-      #OPEN_AI_PROXY: ''
+      PROXY: ''
       SINGLE_CHAT_PREFIX: '["bot", "@bot"]'
       SINGLE_CHAT_REPLY_PREFIX: '"[bot] "'
       GROUP_CHAT_PREFIX: '["@bot"]'

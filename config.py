@@ -104,7 +104,21 @@ available_setting = {
     # 知识库平台配置
     "use_linkai": False,
     "linkai_api_key": "",
-    "linkai_app_code": ""
+    "linkai_app_code": "",
+    # allinai知识库平台配置allinai
+    "allinai_api_key": "",  # your_allinai_api_key
+    "chat_id": "",  # your_chat_id
+    "allinai_model_id": "",  # your_model_id
+    "max_single_chat_replies": "",
+    "max_group_chat_replies": "",
+    "ad_message": "",
+    "max_daily_replies": "",
+    "max_hourly_replies": "",
+    "max_message_length": "",
+    "db_path": "",
+    "bot_prefix": "",
+    "error_message": "",
+    "base_url": "",
 }
 
 
