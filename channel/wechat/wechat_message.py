@@ -40,6 +40,10 @@ class WechatMessage(ChatMessage):
                 self.content = itchat_msg["Content"]
                 if is_group:
                     self.actual_user_nickname = re.findall(r"\"(.*?)\"", itchat_msg["Content"])[0]
+            elif "可以开始聊天了" in itchat_msg["Content"]:
+                self.ctype = ContextType.ADD_FRIEND
+                self.content = itchat_msg["Content"]
+                self.actual_user_nickname = self.to_user_nickname
             else:
                 raise NotImplementedError("Unsupported note message: " + itchat_msg["Content"])
         else:
@@ -74,5 +78,5 @@ class WechatMessage(ChatMessage):
         if self.is_group:
             self.is_at = itchat_msg["IsAt"]
             self.actual_user_id = itchat_msg["ActualUserName"]
-            if self.ctype not in [ContextType.JOIN_GROUP, ContextType.PATPAT]:
+            if self.ctype not in [ContextType.JOIN_GROUP, ContextType.PATPAT, ContextType.ADD_FRIEND]:
                 self.actual_user_nickname = itchat_msg["ActualNickName"]

@@ -10,6 +10,7 @@ class ContextType(Enum):
     IMAGE_CREATE = 10  # 创建图片命令
     JOIN_GROUP = 20  # 加入群聊
     PATPAT = 21  # 拍了拍
+    ADD_FRIEND = 22 #添加好友通过
 
     def __str__(self):
         return self.name
