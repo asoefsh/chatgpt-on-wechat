@@ -19,8 +19,11 @@ class allinaiBot(Bot):
         self.base_url = conf().get("base_url") or "https://all.chayinzi.biz/api/openapi"
         self.sessions = SessionManager(ChatGPTSession, model=conf().get("model") or "gpt-3.5-turbo")
         self.reply_counts = {}
+        self.reply_minute_counts = {}
         self.last_update_date = datetime.date.today()
+        self.last_reply_minute = datetime.datetime.now().minute
         self.max_daily_replies = conf().get("max_daily_replies", 10000)
+        self.max_minute_replies = conf().get("max_minute_replies", 3)
         self.max_single_chat_replies = conf().get("max_single_chat_replies")
         self.max_group_chat_replies = conf().get("max_group_chat_replies")
         self.ad_message = conf().get("ad_message")
@@ -39,11 +42,26 @@ class allinaiBot(Bot):
             # If so, reset the reply counts and update the date
             self.reply_counts = {}
             self.last_update_date = datetime.date.today()
+        
+        # Check if we've moved to a new minute since the last update
+        if datetime.datetime.now().minute != self.last_reply_minute:
+            # If so, reset the reply counts and update the date
+            self.reply_minute_counts = {}
+            self.last_reply_minute = datetime.datetime.now().minute
 
         # Check if the user has already reached the maximum number of replies for the day
         if self.reply_counts.get(wechat_nickname, 0) >= self.max_daily_replies:
             # If so, return an error message
             return Reply(ReplyType.ERROR, "已达到最大回复次数")
+        
+        # Check if the user has already reached the maximum number of replies within one minute
+        current_minute = datetime.datetime.now().minute
+        if self.reply_minute_counts.get(wechat_nickname, 0) >= self.max_minute_replies:
+            # If so, return an error message
+            return Reply(ReplyType.ERROR, "已达到一分钟内的最大回复次数，请稍后再试")
+
+        # Otherwise, increment the user's reply count
+        self.reply_minute_counts[wechat_nickname] = self.reply_minute_counts.get(wechat_nickname, 0) + 1
 
         # Otherwise, increment the user's reply count
         self.reply_counts[wechat_nickname] = self.reply_counts.get(wechat_nickname, 0) + 1

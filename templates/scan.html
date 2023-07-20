@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan QRCode111</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <h1>Scan QRCode222</h1>
+    <div id="output"></div>
+    <script>
+        const socket = io.connect('https://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function() {
+            console.log('WebSocket connected');
+        });
+
+        socket.on('message', function(data) {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML += data + '<br>';
+            outputDiv.scrollTop = outputDiv.scrollHeight;
+        });
+    </script>
+</body>
+</html>

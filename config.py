@@ -113,7 +113,7 @@ available_setting = {
     "max_group_chat_replies": "",
     "ad_message": "",
     "max_daily_replies": "",
-    "max_hourly_replies": "",
+    "max_minute_replies": "",
     "max_message_length": "",
     "db_path": "",
     "bot_prefix": "",
