@@ -66,6 +66,7 @@ def index():
         config_data["group_chat_in_one_session"] = [group.strip() for group in request.form.get("group_chat_in_one_session").split(",")]
         config_data["max_daily_replies"] = int(request.form.get("max_daily_replies"))
         config_data["max_minute_replies"] = int(request.form.get("max_minute_replies"))
+        config_data["add_friend_msg"] = request.form.get("add_friend_msg")
         # Add other form fields for other environment variables
 
         with open("config.json", "w") as config_file:

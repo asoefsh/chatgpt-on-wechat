@@ -114,6 +114,7 @@ available_setting = {
     "ad_message": "",
     "max_daily_replies": "",
     "max_minute_replies": "",
+    "add_friend_msg": "",
     "max_message_length": "",
     "db_path": "",
     "bot_prefix": "",

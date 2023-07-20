@@ -6,6 +6,7 @@ from bridge.reply import Reply, ReplyType
 from channel.chat_message import ChatMessage
 from common.log import logger
 from plugins import *
+from config import conf
 
 
 @plugins.register(
@@ -51,25 +52,12 @@ class Hello(Plugin):
         #     e_context["context"].content = f"请你随机使用一种风格说一句问候语来欢迎新用户添加你为好友。再请你随机使用一种风格介绍你自己。"
         #     e_context.action = EventAction.BREAK  # 事件结束，进入默认处理逻辑
         #     return
-
+        self.add_friend_msg == conf().get("add_friend_msg") or "你好！我是AI数字分身，有什么可以帮助你的吗？"
         if e_context["context"].type == ContextType.ADD_FRIEND:
             reply = Reply()
             reply.type = ReplyType.TEXT
             msg: ChatMessage = e_context["context"]["msg"]
-            reply.content = f"你好, {msg.from_user_nickname}！\n" \
-               "我是ALLinAI班主任的数字分身，任何关于数字分身和ChatGPT账号相关业务都可以与我交流。\n" \
-               "1、链接页有多种联系我们的方式，包括班主任本人企业微信： \n" \
-               "https://mp.weixin.qq.com/s/1v5CfgsUiUhdWKipUmJY5g\n" \
-               "2、数字分身详细介绍：\n" \
-               "https://mp.weixin.qq.com/s/618i8cX--qYKvLbaHgZipA\n" \
-               "3、ChatGPT账号服务和AI新人速成班培训介绍：\n" \
-               "https://mp.weixin.qq.com/s/7IyZF0j_nl9urszadOB_PA\n" \
-               "4、体验数字分身和ChatGPT中文站：\n" \
-               "https://gpt.chayinzi.biz\n" \
-               "体验方法：\n" \
-               "注册登录>应用>应用市场>选择相关数字分身或ChatGPT中文\n" \
-               "更多，请从“ALLinAI商业先机”公众号了解。\n" \
-               "任何问题，开始与我交流吧"
+            reply.content = self.add_friend_msg
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
 

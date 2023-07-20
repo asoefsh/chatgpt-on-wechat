@@ -70,6 +70,13 @@
         .submit-btn:hover {
             background-color: #45a049;
         }
+        .form-group textarea {
+            width: 100%; /* Set the textarea width to 100% of its container */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -130,6 +137,12 @@
                 <label for="max_minute_replies">每人每分钟最多回复（次）:</label>
                 <input type="number" id="max_minute_replies" name="max_minute_replies" value="{{ config_data.max_minute_replies }}">
             </div>
+
+            <div class="form-group">
+                <label for="add_friend_msg">添加好友欢迎语：</label>
+                <textarea id="add_friend_msg" name="add_friend_msg" rows="8">{{ config_data.add_friend_msg }}</textarea>
+            </div>
+            
             <!-- Add other form fields for other environment variables -->
 
             <input type="submit" class="submit-btn" value="保存">
