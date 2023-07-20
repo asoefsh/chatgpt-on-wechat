@@ -114,10 +114,10 @@ class allinaiBot(Bot):
                 # 在这里修改广告信息的处理部分
                 ad_message = conf().get("ad_message")
                 if isinstance(chat_reply, str) and ad_message:
-                    ad_prefix = "🌟🌟🌟 🌟🌟🌟"
-                    ad_separator = "\n✨✨✨✨✨✨✨✨✨✨"
+                    ad_prefix = ""
+                    ad_separator = "--------------------"
                     ad_message = f"\n{ad_separator}\n{ad_message}\n{ad_separator}"
-                    styled_ad_prefix = f"**{ad_prefix}**"
+                    styled_ad_prefix = f"{ad_prefix}"
                     chat_reply_with_ad = chat_reply + f"\n{styled_ad_prefix}{ad_message}"
                     # self.database.insert_chat(session_id, query, chat_reply_with_ad)
                     return Reply(ReplyType.TEXT, chat_reply_with_ad)

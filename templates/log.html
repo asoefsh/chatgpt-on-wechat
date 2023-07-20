@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>扫码登陆</title>
+    <style>
+        body {
+            white-space: pre-wrap; /* Preserve line breaks */
+            font-family: 'Courier New', Courier, monospace; /* Use a monospace font for better alignment */
+            font-size: 14px; /* Adjust font size to your preference */
+            line-height: 1.5; /* Adjust line height to your preference */
+        }
+        .container {
+            max-width: 800px; /* Adjust the maximum width of the log content */
+            margin: 0 auto; /* Center the content horizontally */
+            padding: 20px; /* Add some padding for better readability */
+            max-height: 600px; /* Limit the container height to 600px */
+            overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+            border: 2px solid #4CAF50; /* Add green border around the log container */
+            border-radius: 5px; /* Add border radius for a rounded look */
+        }
+        .buttons-container {
+            text-align: center; /* Center the buttons horizontally */
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .button2 {
+            padding: 10px 20px;
+            background-color: #4ca2af;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            margin-top: 20px; /* 添加垂直间距 */
+        }
+        .button2:hover {
+            background-color: #454ca0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="logContainer">
+        {{ log_content }}
+    </div>
+    <div class="buttons-container">
+        <button class="button" onclick="executeScript('start')">开启微信机器人</button>
+        <button class="button" onclick="executeScript('shutdown')">关闭微信机器人</button>
+        <p></p>
+        <a href="/home" class="button2">返回首页</a>
+    </div>
+    <script>
+        // Function to scroll to the bottom of the log container
+        function scrollToBottom() {
+            var logContainer = document.getElementById("logContainer");
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // Scroll to the bottom when the page is fully loaded
+        window.addEventListener("load", function() {
+            scrollToBottom();
+        });
+
+        // Function to refresh the page every minute
+        function refreshPage() {
+            location.reload();
+        }
+
+        // Refresh the page every minute (60,000 milliseconds)
+        setInterval(refreshPage, 60000);
+
+        // Function to execute the specified script
+        function executeScript(scriptPath) {
+        // 使用 AJAX 发送 POST 请求到后端的新 API 接口
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/execute_script", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // 后端执行脚本成功的回调逻辑
+                    alert(xhr.responseText);
+                } else {
+                    // 后端执行脚本失败的回调逻辑
+                    alert(xhr.responseText);
+                }
+            }
+        };
+
+        // 发送包含要执行的脚本名称的 JSON 数据
+        var requestData = JSON.stringify({ script: scriptPath });
+        xhr.send(requestData);
+        }
+    </script>
+</body>
+</html>

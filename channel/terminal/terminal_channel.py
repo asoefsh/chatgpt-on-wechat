@@ -70,7 +70,7 @@ class TerminalChannel(ChatChannel):
             try:
                 prompt = self.get_input()
             except KeyboardInterrupt:
-                print("\nExiting...")
+                print("\nExiting退出中...")
                 sys.exit()
             msg_id += 1
             trigger_prefixs = conf().get("single_chat_prefix", [""])

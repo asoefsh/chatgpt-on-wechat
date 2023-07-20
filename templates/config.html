@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Config参数调整</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+        max-width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        /* Add the following styles for scrollbar */
+        max-height: 600px; /* Set the maximum height of the container */
+        overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+        }
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 300px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .return-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4ca2af;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px; /* 添加垂直间距 */
+        }
+        .return-btn:hover {
+            background-color: #454ca0;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Config参数调整</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="allinai_api_key">allinai_api_key:</label>
+                <input type="text" id="allinai_api_key" name="allinai_api_key" value="{{ config_data.allinai_api_key }}">
+            </div>
+
+            <div class="form-group">
+                <label for="allinai_model_id">allinai_model_id:</label>
+                <input type="text" id="allinai_model_id" name="allinai_model_id" value="{{ config_data.allinai_model_id }}">
+            </div>
+
+            <div class="form-group">
+                <label for="base_url">base_url:</label>
+                <input type="text" id="base_url" name="base_url" value="{{ config_data.base_url }}">
+            </div>
+
+            <div class="form-group">
+                <label for="ad_message">广告语:</label>
+                <input type="text" id="ad_message" name="ad_message" value="{{ config_data.ad_message }}">
+            </div>
+
+            <div class="form-group">
+                <label for="single_chat_prefix">单人聊天触发条件:</label>
+                <input type="text" id="single_chat_prefix" name="single_chat_prefix" value="{{ config_data.single_chat_prefix | join(', ') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="single_chat_reply_prefix">单人聊天回复前缀:</label>
+                <input type="text" id="single_chat_reply_prefix" name="single_chat_reply_prefix" value="{{ config_data.single_chat_reply_prefix }}">
+            </div>
+
+            <div class="form-group">
+                <label for="group_chat_prefix">群聊天触发条件:</label>
+                <input type="text" id="group_chat_prefix" name="group_chat_prefix" value="{{ config_data.group_chat_prefix | join(', ') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="group_name_white_list">群聊天白名单（默认全部群）:</label>
+                <input type="text" id="group_name_white_list" name="group_name_white_list" value="{{ config_data.group_name_white_list | join(', ') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="group_chat_in_one_session">群内聊天携带上下文（默认全部群）:</label>
+                <input type="text" id="group_chat_in_one_session" name="group_chat_in_one_session" value="{{ config_data.group_chat_in_one_session | join(', ') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="max_daily_replies">每人每日最多回复（次）:</label>
+                <input type="number" id="max_daily_replies" name="max_daily_replies" value="{{ config_data.max_daily_replies }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="max_minute_replies">每人每分钟最多回复（次）:</label>
+                <input type="number" id="max_minute_replies" name="max_minute_replies" value="{{ config_data.max_minute_replies }}">
+            </div>
+            <!-- Add other form fields for other environment variables -->
+
+            <input type="submit" class="submit-btn" value="保存">
+        </form>
+        <p></p>
+        <a href="/home" class="return-btn">返回首页</a>
+        <script>
+            // Function to handle the form submission asynchronously
+            function handleSubmit(event) {
+                event.preventDefault();
+                const form = event.target;
+                const formData = new FormData(form);
+    
+                // Send the form data to the server using Fetch API
+                fetch("/config", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Display the success message using alert
+                    alert(data.message);
+                })
+                .catch(error => {
+                    // Display an error message if the request fails
+                    alert("Error saving config.");
+                });
+            }
+    
+            // Attach the handleSubmit function to the form submission event
+            document.querySelector("form").addEventListener("submit", handleSubmit);
+        </script>
+    </div>
+</body>
+</html>
