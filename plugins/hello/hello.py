@@ -52,7 +52,7 @@ class Hello(Plugin):
         #     e_context["context"].content = f"请你随机使用一种风格说一句问候语来欢迎新用户添加你为好友。再请你随机使用一种风格介绍你自己。"
         #     e_context.action = EventAction.BREAK  # 事件结束，进入默认处理逻辑
         #     return
-        self.add_friend_msg == conf().get("add_friend_msg") or "你好！我是AI数字分身，有什么可以帮助你的吗？"
+        self.add_friend_msg = conf().get("add_friend_msg") or "你好！我是AI数字分身，有什么可以帮助你的吗？"
         if e_context["context"].type == ContextType.ADD_FRIEND:
             reply = Reply()
             reply.type = ReplyType.TEXT

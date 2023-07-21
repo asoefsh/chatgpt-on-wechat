@@ -7,7 +7,7 @@
             white-space: pre-wrap; /* Preserve line breaks */
             font-family: 'Courier New', Courier, monospace; /* Use a monospace font for better alignment */
             font-size: 14px; /* Adjust font size to your preference */
-            line-height: 1.5; /* Adjust line height to your preference */
+            line-height: 1.1; /* Adjust line height to your preference */
         }
         .container {
             max-width: 800px; /* Adjust the maximum width of the log content */
@@ -49,11 +49,25 @@
         .button2:hover {
             background-color: #454ca0;
         }
+        .refresh-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            position: relative;
+            z-index: 1; /* 保证按钮在上层 */
+        }
     </style>
 </head>
 <body>
     <div class="container" id="logContainer">
         {{ log_content }}
+        <!-- 新增的刷新按钮 -->
+        <a class="refresh-button" onclick="refreshPage()">刷新</a>
     </div>
     <div class="buttons-container">
         <button class="button" onclick="executeScript('start')">开启微信机器人</button>
