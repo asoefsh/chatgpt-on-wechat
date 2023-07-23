@@ -10,8 +10,8 @@ with open("config.json", "r") as config_file:
     config_data = json.load(config_file)
 
 # Sample username and password (replace with your own credentials)
-USERNAME = "admin"
-PASSWORD = "123456"
+USERNAME = "65294002@qq.com"
+PASSWORD = "65294002"
 
 def is_authenticated():
     return session.get("authenticated", False)
@@ -72,12 +72,24 @@ def index():
         with open("config.json", "w") as config_file:
             json.dump(config_data, config_file, indent=4, ensure_ascii=False)
         # Return a JSON response indicating success
-        return jsonify({"message": "保存成功!"})
+        return jsonify({"message": "保存成功!\n注:保存后需要联系客服帮您重启服务，重启后重新登录微信机器人。"})
 
     return render_template("config.html", config_data=config_data)
 
 
 @app.route("/log")
+def show_log():
+    if not is_authenticated():
+        return redirect(url_for("login"))
+
+    try:
+        with open("nohup.out", "r", encoding="utf-8") as log_file:
+            log_content = log_file.read()
+        return render_template("log2.html", log_content=log_content)
+    except FileNotFoundError:
+        return "No log file found."
+
+@app.route("/admin")
 def show_log():
     if not is_authenticated():
         return redirect(url_for("login"))
