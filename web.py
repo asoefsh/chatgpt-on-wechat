@@ -55,9 +55,7 @@ def index():
 
 
     if request.method == "POST":
-        config_data["allinai_api_key"] = request.form.get("allinai_api_key")
         config_data["allinai_model_id"] = request.form.get("allinai_model_id")
-        config_data["base_url"] = request.form.get("base_url")
         config_data["ad_message"] = request.form.get("ad_message")
         config_data["single_chat_prefix"] = [prefix.strip() for prefix in request.form.get("single_chat_prefix").split(",")]
         config_data["single_chat_reply_prefix"] = request.form.get("single_chat_reply_prefix")
@@ -90,7 +88,7 @@ def show_log():
         return "No log file found."
 
 @app.route("/admin")
-def show_log():
+def show_admin_log():
     if not is_authenticated():
         return redirect(url_for("login"))
 
