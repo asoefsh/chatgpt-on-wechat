@@ -40,7 +40,7 @@ class WechatMessage(ChatMessage):
                 self.content = itchat_msg["Content"]
                 if is_group:
                     self.actual_user_nickname = re.findall(r"\"(.*?)\"", itchat_msg["Content"])[0]
-            elif "可以开始聊天了" in itchat_msg["Content"]:
+            elif "可以开始聊天了" in itchat_msg["Content"] and "添加了" in itchat_msg["Content"]:
                 self.ctype = ContextType.ADD_FRIEND
                 self.content = itchat_msg["Content"]
                 self.actual_user_nickname = self.to_user_nickname
