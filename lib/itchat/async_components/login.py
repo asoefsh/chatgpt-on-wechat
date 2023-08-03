@@ -341,7 +341,7 @@ async def start_receiving(self, exitCallback=None, getReceivingFnOnly=False):
         if hasattr(exitCallback, '__call__'):
             exitCallback(self.storageClass.userName)
         else:
-            logger.info('LOG OUT!')
+            logger.info('LOG OUT!\n微信登录已退出！')
     if getReceivingFnOnly:
         return maintain_loop
     else:

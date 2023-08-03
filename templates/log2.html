@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>扫码登陆</title>
+    <title>扫码/管理</title>
     <style>
         body {
             white-space: pre-wrap; /* Preserve line breaks */
@@ -70,6 +70,9 @@
         <a class="refresh-button" onclick="refreshPage()">刷新</a>
     </div>
     <div class="buttons-container">
+        <button class="button" onclick="executeScript('start')">开启数字分身系统</button>
+        <button class="button" onclick="executeScript('shutdown')">关闭数字分身系统</button>
+        <button class="button" onclick="restartRobot()">重启数字分身系统</button>
         <p></p>
         <a href="/home" class="button2">返回首页</a>
     </div>
@@ -92,6 +95,65 @@
 
         // Refresh the page every minute (60,000 milliseconds)
         setInterval(refreshPage, 60000);
+
+        // Function to execute the specified script
+        function executeScript(scriptPath) {
+            // 使用 AJAX 发送 POST 请求到后端的新 API 接口
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/execute_script", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // 后端执行脚本成功的回调逻辑
+                        alert(xhr.responseText);
+                    } else {
+                        // 后端执行脚本失败的回调逻辑
+                        alert(xhr.responseText);
+                    }
+                }
+            };
+
+            // 发送包含要执行的脚本名称的 JSON 数据
+            var requestData = JSON.stringify({ script: scriptPath });
+            xhr.send(requestData);
+        }
+
+        // Function to execute the specified script with a delay
+        function executeScriptWithDelay(scriptPath, delay) {
+            setTimeout(function() {
+                restartScript(scriptPath);
+            }, delay);
+        }
+        // Function to restart the WeChat robot by executing shutdown and start with a delay
+        function restartRobot() {
+            // 先执行关闭，然后加一定时间延迟，再执行开启
+            executeScriptWithDelay('shutdown', 0); // 立即执行关闭
+            executeScriptWithDelay('start', 5000); // 延迟5秒后执行开启，单位是毫秒
+
+        }
+        // Function to execute the restart script
+        function restartScript(scriptPath) {
+            // 使用 AJAX 发送 POST 请求到后端的新 API 接口
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/restart_script", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // 后端执行脚本成功的回调逻辑
+                        alert(xhr.responseText);
+                    } else {
+                        // 后端执行脚本失败的回调逻辑
+                        alert(xhr.responseText);
+                    }
+                }
+            };
+
+            // 发送包含要执行的脚本名称的 JSON 数据
+            var requestData = JSON.stringify({ script: scriptPath });
+            xhr.send(requestData);
+        }
     </script>
 </body>
 </html>

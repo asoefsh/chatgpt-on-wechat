@@ -70,7 +70,7 @@ def index():
         with open("config.json", "w") as config_file:
             json.dump(config_data, config_file, indent=4, ensure_ascii=False)
         # Return a JSON response indicating success
-        return jsonify({"message": "保存成功!\n注:保存后需要联系客服帮您重启服务，重启后重新登录微信机器人。"})
+        return jsonify({"message": "保存成功!\n注:保存后需要去【扫码/管理】页面重启系统，重启后需要重新微信扫码登录即可生效。"})
 
     return render_template("config.html", config_data=config_data)
 
@@ -83,7 +83,7 @@ def show_log():
     try:
         with open("nohup.out", "r", encoding="utf-8") as log_file:
             log_content = log_file.read()
-        return render_template("log2.html", log_content=log_content)
+        return render_template("log.html", log_content=log_content)
     except FileNotFoundError:
         return "No log file found."
 
@@ -95,7 +95,7 @@ def show_admin_log():
     try:
         with open("nohup.out", "r", encoding="utf-8") as log_file:
             log_content = log_file.read()
-        return render_template("log.html", log_content=log_content)
+        return render_template("log2.html", log_content=log_content)
     except FileNotFoundError:
         return "No log file found."
 
@@ -117,10 +117,33 @@ def execute_script():
 
     try:
         subprocess.run(["sh", script_path], check=True)
-        return f"Script {script_name}.sh executed successfully!"
+        return f"您已成功关闭数字分身系统!"
     except subprocess.CalledProcessError as e:
-        return f"Error executing {script_name}.sh: {e}", 500
+        # return f"Error executing {script_name}.sh: {e}", 500
+        return f"数字分身系统已处于关闭状态，无法再次关闭。", 500
 
+@app.route("/restart_script", methods=["POST"])
+def restart_script():
+    if not is_authenticated():
+        return redirect(url_for("login"))
+
+    script_name = request.json.get("script")
+    if not script_name:
+        return "No script name provided.", 400
+
+    if script_name == "start":
+        script_path = "scripts/start.sh"
+    elif script_name == "shutdown":
+        script_path = "scripts/shutdown.sh"
+    else:
+        return f"Invalid script: {script_name}", 400
+
+    try:
+        subprocess.run(["sh", script_path], check=True)
+        return f"您已成功重启数字分身系统！5秒钟后点击刷新按钮即可扫码登陆。"
+    except subprocess.CalledProcessError as e:
+        # return f"Error executing {script_name}.sh: {e}", 500
+        return f"您已成功重启数字分身系统！5秒钟后点击刷新按钮即可扫码登陆。", 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=23456)
