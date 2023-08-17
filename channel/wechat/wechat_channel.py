@@ -20,7 +20,7 @@ from common.expired_dict import ExpiredDict
 from common.log import logger
 from common.singleton import singleton
 from common.time_check import time_checker
-from config import conf, get_appdata_dir
+from config import conf, get_appdata_dir, load_config
 from lib import itchat
 from lib.itchat.content import *
 
@@ -121,10 +121,13 @@ class WechatChannel(ChatChannel):
         )
         self.user_id = itchat.instance.storageClass.userName
         self.name = itchat.instance.storageClass.nickName
-        logger.info("Wechat login success, user_id: {}, nickname: {}".format(self.user_id, self.name))
+        # 获取个人信息
+        
+        # print(friends)   
+        logger.info("Wechat login success, user_id: {}, nickname: {}, wechat_number: {}".format(self.user_id, self.name, self.name))
         # start message listener
         itchat.run()
-
+        
     # handle_* 系列函数处理收到的消息后构造Context，然后传入produce函数中处理Context和发送回复
     # Context包含了消息的所有信息，包括以下属性
     #   type 消息类型, 包括TEXT、VOICE、IMAGE_CREATE

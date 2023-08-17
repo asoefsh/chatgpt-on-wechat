@@ -60,6 +60,7 @@ def index():
         config_data["single_chat_prefix"] = [prefix.strip() for prefix in request.form.get("single_chat_prefix").split(",")]
         config_data["single_chat_reply_prefix"] = request.form.get("single_chat_reply_prefix")
         config_data["group_chat_prefix"] = [prefix.strip() for prefix in request.form.get("group_chat_prefix").split(",")]
+        config_data["not_chat_prefix"] = [prefix.strip() for prefix in request.form.get("not_chat_prefix").split(",")]
         config_data["group_name_white_list"] = [group.strip() for group in request.form.get("group_name_white_list").split(",")]
         config_data["group_chat_in_one_session"] = [group.strip() for group in request.form.get("group_chat_in_one_session").split(",")]
         config_data["max_daily_replies"] = int(request.form.get("max_daily_replies"))

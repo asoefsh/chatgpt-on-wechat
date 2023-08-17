@@ -21,6 +21,7 @@ available_setting = {
     "azure_deployment_id": "",  # azure 模型部署名称
     # Bot触发配置
     "single_chat_prefix": ["bot", "@bot"],  # 私聊时文本需要包含该前缀才能触发机器人回复
+    "not_chat_prefix": ["human", "//human"],
     "single_chat_reply_prefix": "[bot] ",  # 私聊时自动回复的前缀，用于区分真人
     "single_chat_reply_suffix": "",  # 私聊时自动回复的后缀，\n 可以换行    
     "group_chat_prefix": ["@bot"],  # 群聊时包含该前缀则会触发机器人回复 
@@ -106,6 +107,7 @@ available_setting = {
     "linkai_api_key": "",
     "linkai_app_code": "",
     # allinai知识库平台配置allinai
+    "wx_id":"",
     "allinai_api_key": "",  # your_allinai_api_key
     "chat_id": "",  # your_chat_id
     "allinai_model_id": "",  # your_model_id

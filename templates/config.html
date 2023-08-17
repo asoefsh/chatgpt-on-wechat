@@ -109,6 +109,11 @@
             </div>
 
             <div class="form-group">
+                <label for="not_chat_prefix">真人介入触发条件:</label>
+                <input type="text" id="not_chat_prefix" name="not_chat_prefix" value="{{ config_data.not_chat_prefix | join(', ') }}">
+            </div>
+            
+            <div class="form-group">
                 <label for="group_name_white_list">群聊天白名单（默认全部群）:</label>
                 <input type="text" id="group_name_white_list" name="group_name_white_list" value="{{ config_data.group_name_white_list | join(', ') }}">
             </div>
